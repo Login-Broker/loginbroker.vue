@@ -1,2 +1,2 @@
-import SessionButton from './SessionButton.vue'
-export { SessionButton }
+import LoginBrokerButton from './LoginBrokerButton.vue'
+export { LoginBrokerButton }

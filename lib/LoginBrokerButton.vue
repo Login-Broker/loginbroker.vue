@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const { platform } = defineProps(['platform']);
+const { platform, tenantName } = defineProps(['platform', 'tenantName']);
 const emit = defineEmits(['onErrorReceived', 'onSessionReceived']);
 
 const sessionId = ref<string | null>(null);
@@ -29,7 +29,7 @@ function generateRandomString(length: number): string {
 }
 
 function confirmLogin() {
-  fetch(`https://api.login.broker/loginbroker/auth/status/${sessionId.value}`)
+  fetch(`https://api.login.broker/${tenantName}/auth/status/${sessionId.value}`)
     .then(response => response.text()) // Read response as text
     .then(data => {
       if (data === 'completed') {
