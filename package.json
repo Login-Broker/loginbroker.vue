@@ -1,6 +1,6 @@
 {
   "name": "vue-login-broker-library",
-  "version": "2.0.1",
+  "version": "1.0.0",
   "type": "module",
   "files": ["dist"],
   "main": "./dist/vue-login-broker-library.umd.cjs",
