@@ -13,13 +13,11 @@ export default {
   },
   methods: {
     handleSessionReceived(sessionId: string) {
-      debugger
       console.log('Received sessionId', sessionId);
       // Perform further action
       // window.location.href = "https://login.broker/";
     },
     handleErrorReceived(error: any) {
-      debugger
       console.log('Error happened', error);
     },
   },

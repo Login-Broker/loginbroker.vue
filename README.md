@@ -16,14 +16,32 @@ npm install vue-login-broker-library
 ## Usage
 
 ```
-  const handleSessionReceived = (sessionId) => {
-    console.log('Received sessionId', sessionId);
-    // Verify the sessionId on your server-side or API and get the logged in user email
-  }
+  <template>
+    <div class="App">
+      <LoginBrokerButton platform="google" tenantName="loginbroker" @onSessionReceived="handleSessionReceived" @onErrorReceived="handleErrorReceived" />
+      <LoginBrokerButton platform="github" tenantName="loginbroker" @onSessionReceived="handleSessionReceived" @onErrorReceived="handleErrorReceived" />
+    </div>
+  </template>
+  <script lang="ts">
+  import { LoginBrokerButton } from 'vue-login-broker-library';
+  import 'vue-login-broker-library/dist/style.css';
 
-  const handleErrorReceived = (error) => {
-    console.log('Error happened', error);
-  }
-
-  <SessionButton platform={your_favorite_platform} onSessionReceived={your_received_session_handler} onErrorReceived={your_received_error_handler} />
+  export default {
+    components: {
+      LoginBrokerButton,
+    },
+    methods: {
+      handleSessionReceived(sessionId: any) {
+        debugger
+        console.log('Received sessionId', sessionId);
+        // Perform further action
+        // window.location.href = "https://login.broker/";
+      },
+      handleErrorReceived(error: any) {
+        debugger
+        console.log('Error happened', error);
+      },
+    },
+  };
+  </script>
 ```
