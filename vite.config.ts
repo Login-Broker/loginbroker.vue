@@ -8,9 +8,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
-      name: 'VueLoginBroker',
+      name: 'VueLoginBrokerLibrary',
       // the proper extensions will be added
-      fileName: 'vue-login-broker'
+      fileName: 'vue-login-broker-library'
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

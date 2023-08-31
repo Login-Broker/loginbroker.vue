@@ -1,15 +1,15 @@
 {
-  "name": "vue-login-broker-jantektsan",
+  "name": "vue-login-broker-library",
   "version": "2.0.1",
   "type": "module",
   "files": ["dist"],
-  "main": "./dist/vue-login-broker-jantektsan.umd.cjs",
-  "module": "./dist/vue-login-broker-jantektsan.js",
+  "main": "./dist/vue-login-broker-library.umd.cjs",
+  "module": "./dist/vue-login-broker-library.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-login-broker-jantektsan.js",
-      "require": "./dist/vue-login-broker-jantektsan.umd.js"
+      "import": "./dist/vue-login-broker-library.js",
+      "require": "./dist/vue-login-broker-library.umd.js"
     },
     "./dist/style.css": "./dist/style.css"
   },
