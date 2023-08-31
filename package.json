@@ -1,0 +1,31 @@
+{
+  "name": "vue-login-broker-jantektsan",
+  "version": "2.0.1",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/vue-login-broker-jantektsan.umd.cjs",
+  "module": "./dist/vue-login-broker-jantektsan.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-login-broker-jantektsan.js",
+      "require": "./dist/vue-login-broker-jantektsan.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vue-tsc": "^1.8.5"
+  }
+}
