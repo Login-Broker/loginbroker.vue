@@ -16,8 +16,7 @@ const generateRandomString = (length: number): string => {
 export default function useLoginBroker(
   tenantName: string,
   platform: string,
-  onSessionReceived: (sessionId: string | null) => void,
-  onErrorReceived: (error: string) => void
+  emit: (event: "onSessionReceived" | "onErrorReceived", ...args: any[]) => void
 ): {
   sessionId: Ref<string | null>;
   startLoginProcess: () => void;
@@ -45,16 +44,16 @@ export default function useLoginBroker(
 
   const handleStatusResponse = (data: string): void => {
     if (data === 'completed') {
-      onSessionReceived(sessionId.value);
+      emit('onSessionReceived', sessionId.value);
     } else if (data === 'failed') {
       console.log('Login failed. Try again');
-      onErrorReceived(data);
+      emit('onErrorReceived', data);
     } else if (data === 'pending') {
       hasBeenPending = true;
       retryLoginOrGiveUp();
     } else if (hasBeenPending) {
       console.log('Session expired');
-      onErrorReceived(data);
+      emit('onErrorReceived', data);
     } else {
       console.log('Session not yet available');
       retryLoginOrGiveUp();
@@ -67,13 +66,13 @@ export default function useLoginBroker(
       setTimeout(confirmLogin, 2000);
     } else {
       console.log('Max retries reached while pending. Giving up.');
-      onErrorReceived('Max retries reached while pending. Giving up.');
+      emit('onErrorReceived', 'Max retries reached while pending. Giving up.');
     }
   };
 
   const handleError = (error: string): void => {
     console.error(error);
-    onErrorReceived(error);
+    emit('onErrorReceived', error);
   };
 
   const startLoginProcess = (): void => {

@@ -5,23 +5,13 @@
   </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import useLoginBroker from './useLoginBroker';
 
-export default {
-  props: {
-    tenantName: String,
-    platform: String,
-    onSessionReceived: Function,
-    onErrorReceived: Function,
-  },
-  methods: {
-    startLoginProcess() {
-      const { startLoginProcess } = useLoginBroker(this.tenantName, this.platform, this.onSessionReceived, this.onErrorReceived);
-      startLoginProcess();
-    },
-  },
-};
+const { platform, tenantName } = defineProps(['platform', 'tenantName']);
+const emit = defineEmits(['onSessionReceived', 'onErrorReceived']);
+const { startLoginProcess } = useLoginBroker(tenantName, platform, emit);
+
 </script>
 
 <style scoped>
