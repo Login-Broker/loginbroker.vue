@@ -1,72 +1,27 @@
 <template>
-  <button
-    :class="'login-broker-button login-broker-' + platform + '-button'"
-    @click="handleButtonClick"
-  >
-    <i :class="'fab fa-' + platform"></i>
+  <button :class="['login-broker-button', `login-broker-${platform}-button`]" @click="startLoginProcess">
+    <i :class="['fab', `fa-${platform}`]"></i>
     Login with {{ platform }}
   </button>
 </template>
-<script setup lang="ts">
-import { ref } from 'vue';
 
-const { platform, tenantName } = defineProps(['platform', 'tenantName']);
-const emit = defineEmits(['onErrorReceived', 'onSessionReceived']);
+<script lang="ts">
+import useLoginBroker from './useLoginBroker';
 
-const sessionId = ref<string | null>(null);
-
-function generateRandomString(length: number): string {
-  const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let randomString = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * allowedChars.length);
-    const randomChar = allowedChars.charAt(randomIndex);
-    randomString += randomChar;
-  }
-
-  return randomString;
-}
-
-function confirmLogin() {
-  fetch(`https://api.login.broker/${tenantName}/auth/status/${sessionId.value}`)
-    .then(response => response.text()) // Read response as text
-    .then(data => {
-      if (data === 'completed') {
-        const loginUrl = `https://api.login.broker/account/login/${sessionId.value}`;
-        fetch(loginUrl)
-          .then(response => response.json())
-          .then(data => {
-            if (data.errorType) {
-              console.log(data.errorType);
-              emit('onErrorReceived', data.errorType);
-            } else {
-              emit('onSessionReceived', sessionId.value);
-            }
-          });
-      } else if (data === 'pending') {
-        setTimeout(confirmLogin, 2000); // Check again after 2 seconds
-      } else if (data === 'failed') {
-        console.log('Login failed. Try again');
-        emit('onErrorReceived', data);
-      } else {
-        console.log('Unknown issue');
-        emit('onErrorReceived', data);
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      emit('onErrorReceived', error);
-    });
-}
-
-function handleButtonClick() {
-  sessionId.value = generateRandomString(15);
-  window.open(
-    'https://' + platform + '.login.broker/loginbroker/auth/' + platform + '/session/' + sessionId.value
-  );
-  setTimeout(confirmLogin, 5000);
-}
+export default {
+  props: {
+    tenantName: String,
+    platform: String,
+    onSessionReceived: Function,
+    onErrorReceived: Function,
+  },
+  methods: {
+    startLoginProcess() {
+      const { startLoginProcess } = useLoginBroker(this.tenantName, this.platform, this.onSessionReceived, this.onErrorReceived);
+      startLoginProcess();
+    },
+  },
+};
 </script>
 
 <style scoped>
